@@ -1,0 +1,7 @@
+**/target
+**/Release
+**/DataStream/*_C
+**/DataStream/*Test*
+**/Vicon/../../thirdparty
+**/Vicon/../bin
+
