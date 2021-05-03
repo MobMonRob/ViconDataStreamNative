@@ -3,15 +3,22 @@
 
 ###########################
 #needed by ./bash_config.sh
-projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-projectFolderName="${projectDir##*/}"
+readonly projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+readonly projectFolderName="${projectDir##*/}"
 ###########################
 
 
-#Project Definitions
+#Project Constants
 ###########################
-localTmp="./target/_tmp/Linux64"
-localTarget="./target/Linux64"
-ViconDir="$projectDir/ViconDataStreamSDK"
-BoostDir="$projectDir/Boost"
+readonly localTarget="./target"
+readonly linuxTarget="$localTarget/Linux64"
+
+readonly localTmp="$localTarget/_tmp"
+readonly noarchTmp="$localTmp/Noarch"
+readonly linuxTmp="$localTmp/Linux64"
+
+
+#Project Variables
+###########################
+readonly boostVersion="boost-1.58.0"
 

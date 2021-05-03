@@ -7,12 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	rm -rdf "$localTarget"
-	mkdir -p "$localTarget"
+	./boost-setup_local_Linux64.sh
 
-	./setup-boost_local_Linux64.sh
-
-	./generate-usable-boost-dir_local_Linux64.sh
+	./boost-generate-usable-dir_local_Linux64.sh
 }
 
 run_bash run $@

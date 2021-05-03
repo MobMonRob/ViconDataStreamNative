@@ -8,16 +8,28 @@ source "./_bash_config.sh"
 
 
 run() {
-	local localTmp="$(realpath "$localTmp")"
-	local localTarget="$(realpath "$localTarget")"
-	local -r boostDir="$localTmp/boost"
-	local -r stageDir="$localTmp/stage"
-	local -r buildDir="$localTmp/build"
+	local -r fullLocalTmp="$(realpath "$linuxTmp")"
+	local -r fullLocalTarget="$(realpath "$linuxTarget")"
+	local -r boostDir="$fullLocalTmp/boost"
+	local -r stageDir="$fullLocalTmp/stage"
+	local -r buildDir="$fullLocalTmp/build"
 	local -r boostLibDir="$stageDir/lib"
+
+	copy_boost_dir
 
 	build_boost
 
 	link_so
+}
+
+
+copy_boost_dir() {
+	local -r noarchBoostDir="$noarchTmp/boost"
+
+	rm -rdf "$boostDir"
+	mkdir -p "$boostDir"
+
+	cp -r -L -l "$noarchBoostDir" -T "$boostDir"
 }
 
 
@@ -51,8 +63,11 @@ link_so() {
 
 	echo "linking... (needs some time)"
 
+	rm -rdf "$fullLocalTarget"
+	mkdir -p "$fullLocalTarget"
+
 	g++ -shared -flto -Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -pthread -licuuc -licudata -licui18n -lz -Wl,--end-group \
-	-o "$localTarget/libboost.so" \
+	-o "$fullLocalTarget/libboost.so" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 }
 

@@ -6,9 +6,10 @@ cd "$scriptDir"
 
 source "./_bash_config.sh"
 
+
 run() {
-	local -r boostRepoRoot="$localTmp/boost"
-	local -r targetIncludeDir="$localTarget/include/boost"
+	local -r boostRepoRoot="$linuxTmp/boost"
+	local -r targetIncludeDir="$linuxTarget/include/boost"
 
 	## Naive copying is not sufficient - unclear why some files are missing in that case.
 	## Workaround:

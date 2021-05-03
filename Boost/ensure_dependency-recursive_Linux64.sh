@@ -7,12 +7,12 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [[ ! -d "$localTmp/boost" ]]; then
+	if [[ ! -d "$linuxTmp/boost" ]]; then
 		# Dependencies here
 
 		./regenerate_local_Linux64.sh
 
-	elif [[ ! -d "$localTarget" ]]; then
+	elif [[ ! -d "$linuxTarget" ]]; then
 		./regenerate-soft_local_Linux64.sh
 	fi
 }
