@@ -12,10 +12,12 @@ readonly projectFolderName="${projectDir##*/}"
 ###########################
 readonly localTarget="./target"
 readonly linuxTarget="$localTarget/Linux64"
+readonly windowsTarget="$localTarget/Windows64"
 
 readonly localTmp="$localTarget/_tmp"
 readonly noarchTmp="$localTmp/Noarch"
 readonly linuxTmp="$localTmp/Linux64"
+readonly windowsTmp="$localTmp/Windows64"
 
 
 #Project Variables
