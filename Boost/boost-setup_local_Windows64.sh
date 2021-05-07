@@ -38,10 +38,11 @@ bootstrap_boost() {
 	cd "$boostDir"
 
 	git clean -d -f -X
-	rm -rdf "$stageDir"
 	rm -rdf "$buildDir"
 
 	./bootstrap.sh
+
+	echo "using gcc : : x86_64-w64-mingw32-g++ ;" > ./user-config.jam
 
 	cd "$scriptDir"
 }
@@ -49,9 +50,9 @@ bootstrap_boost() {
 build_boost() {
 	cd "$boostDir"
 
-	echo "using gcc : : x86_64-w64-mingw32-g++ ;" > ./user-config.jam
+	rm -rdf "$stageDir"
 
-	local -r compilerArgs="-fPIC -flto -std=c++14 -w"
+	local -r compilerArgs="-fPIC -flto -std=c++14 -w -O3"
 
 	#Boost library "Context" wont compile with mingw and is therefore excluded.
 	#See: http://boost.2283326.n4.nabble.com/build-bootstrap-sh-is-still-broken-td4653391i20.html
@@ -64,7 +65,7 @@ build_boost() {
 	#Debugging: --jobs=1
 	#Debugging: -d+2
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
-	./b2 -q -sNO_BZIP2=1 --without-log --without-test --without-python --without-context --without-coroutine binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=win32 architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
+	./b2 -q -sNO_BZIP2=1 --without-log --without-test --without-python --without-context --without-coroutine binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=win32 architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=static --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
 
 	cd "$scriptDir"
 }
@@ -74,7 +75,7 @@ link_so() {
 	rm -f $boostLibDir/*test*.a
 
 	#Needs a user defined cpp_main function
-	rm -f $boostLibDir/libboost_prg_exec_monitor-mt.a
+	rm -f $boostLibDir/libboost_prg_exec_monitor*.a
 
 	#ToDo: Fix boost python lib runtime dependency
 	rm -f $boostLibDir/*python*.a
@@ -90,7 +91,10 @@ link_so() {
 	mkdir -p "$fullLocalTarget"
 
 	#-pthread -licuuc -licudata -licui18n -lz
-	x86_64-w64-mingw32-g++ -shared -flto -Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -Wl,--end-group \
+	x86_64-w64-mingw32-g++ -shared \
+	-O3 -flto  \
+	-static-libgcc -static-libstdc++ \
+	-Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -Wl,--end-group \
 	-o "$fullLocalTarget/libboost.dll" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 }

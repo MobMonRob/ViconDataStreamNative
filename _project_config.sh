@@ -10,17 +10,22 @@ readonly projectFolderName="${projectDir##*/}"
 
 #Project Constants
 ###########################
+readonly platformWindows="Windows64"
+readonly platformLinux="Linux64"
+
 readonly localTarget="./target"
-readonly linuxTarget="$localTarget/Linux64"
-readonly windowsTarget="$localTarget/Windows64"
+readonly linuxTarget="$localTarget/$platformLinux"
+readonly windowsTarget="$localTarget/$platformWindows"
 
 readonly localTmp="$localTarget/_tmp"
 readonly noarchTmp="$localTmp/Noarch"
-readonly linuxTmp="$localTmp/Linux64"
-readonly windowsTmp="$localTmp/Windows64"
+readonly linuxTmp="$localTmp/$platformLinux"
+readonly windowsTmp="$localTmp/$platformWindows"
 
 
 #Project Variables
 ###########################
 readonly boostVersion="boost-1.58.0"
+
+CurrentPlatform="$platformWindows"
 

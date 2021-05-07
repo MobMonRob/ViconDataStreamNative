@@ -9,9 +9,9 @@ source "./_bash_config.sh"
 run() {
 	./clear_local_all.sh
 
-	./boost-download_local_Linux64.sh
+	./boost-download_local_Noarch.sh
 
-	./regenerate-soft_local_Linux64.sh
+	bash "./regenerate-soft_local_$platformLinux.sh"
 }
 
 run_bash run $@

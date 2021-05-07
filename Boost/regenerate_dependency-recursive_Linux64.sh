@@ -12,9 +12,9 @@ run() {
 	# We usually don't want to redownload boost.
 	# Use ./clear_local_all.sh manually instead if necessary.
 	if [[ ! -d "$linuxTmp/boost" ]]; then
-		./regenerate_local_Linux64.sh
+		bash "./regenerate_local_$platformLinux.sh"
 	else
-		./regenerate-soft_local_Linux64.sh
+		bash "./regenerate-soft_local_$platformLinux.sh"
 	fi
 }
 

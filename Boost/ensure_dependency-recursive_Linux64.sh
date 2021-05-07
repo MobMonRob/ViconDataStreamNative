@@ -10,10 +10,10 @@ run() {
 	if [[ ! -d "$linuxTmp/boost" ]]; then
 		# Dependencies here
 
-		./regenerate_local_Linux64.sh
+		bash "./regenerate_local_$platformLinux.sh"
 
 	elif [[ ! -d "$linuxTarget" ]]; then
-		./regenerate-soft_local_Linux64.sh
+		bash "./regenerate-soft_local_$platformLinux.sh"
 	fi
 }
 

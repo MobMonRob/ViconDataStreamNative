@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	$ViconDir/ensure_dependency-recursive_Linux64.sh
+	$ViconDir/regenerate_dependency-recursive_Linux64.sh
 
 	./regenerate_local_Linux64.sh
 }
