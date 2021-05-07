@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	if [ ! -d "$localTarget" ]
 	then
-		$BoostDir/ensure_dependency-recursive_Linux64.sh
+		$BoostDir/ensure_dependency-recursive_Multiarch.sh
 
 		./regenerate_local_Linux64.sh
 	fi

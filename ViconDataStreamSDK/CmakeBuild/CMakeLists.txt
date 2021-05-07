@@ -17,7 +17,7 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	find_package(Threads REQUIRED)
 endif()
 
-SET (VICON_ROOT "${CMAKE_SOURCE_DIR}/../current_Linux64_source/Vicon/CrossMarket")
+SET (VICON_ROOT "${CMAKE_SOURCE_DIR}/../current_Vicon_source/Vicon/CrossMarket")
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
 SET (BOOST "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64")
 SET (VICON_STRING_TEST "${CMAKE_SOURCE_DIR}/..")
