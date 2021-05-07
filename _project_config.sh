@@ -30,5 +30,5 @@ readonly boostVersion="boost-1.58.0"
 #set $currentLocalPlatform but don't use it explicitly.
 #use $currentPlatform instead. But don't set it.
 #$currentLocalPlatform will be used if $currentPlatform is unset.
-readonly currentLocalPlatform="$platformWindows"
+readonly currentLocalPlatform="$platformLinux"
 
