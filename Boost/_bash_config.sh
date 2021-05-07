@@ -2,6 +2,15 @@
 
 
 run_bash() {
+	# this implements export isolation.
+	# exports within the exportIsolation function won't be
+	# exported to this outer environment.
+	exportIsolation $@ &
+	wait
+}
+
+
+exportIsolation() {
 	loadProjectConfig
 
 	local -r relativeScriptPath=$(getRelativeScriptPath)
