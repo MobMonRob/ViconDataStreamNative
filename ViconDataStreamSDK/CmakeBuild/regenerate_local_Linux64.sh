@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	../clear_local_all.sh
 
-	local -r tmpDir="../$localTmp"
+	local -r tmpDir="../$currentTmp"
 
 	build
 	copy
@@ -28,8 +28,8 @@ build() {
 
 
 copy() {
-	local -r boostTargetDir="$BoostDir/$localTarget"
-	local -r targetDir="../$localTarget"
+	local -r boostTargetDir="$BoostDir/$currentTarget"
+	local -r targetDir="../$currentTarget"
 
 	mkdir -p "$targetDir"
 
