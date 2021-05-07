@@ -8,8 +8,8 @@ source "./_bash_config.sh"
 
 
 run() {
-	local -r boostRepoRoot="$windowsTmp/boost"
-	local -r targetIncludeDir="$windowsTarget/include/boost"
+	local -r boostRepoRoot="$currentTmp/boost"
+	local -r targetIncludeDir="$currentTarget/include/boost"
 
 	## Naive copying is not sufficient - unclear why some files are missing in that case.
 	## Workaround:

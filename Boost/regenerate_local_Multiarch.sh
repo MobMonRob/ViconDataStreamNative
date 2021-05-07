@@ -11,7 +11,7 @@ run() {
 
 	./boost-download_local_Noarch.sh
 
-	bash "./regenerate-soft_local_$platformLinux.sh"
+	./regenerate-soft_local_Multiarch.sh
 }
 
 run_bash run $@

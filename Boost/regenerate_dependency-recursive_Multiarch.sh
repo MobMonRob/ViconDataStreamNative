@@ -11,10 +11,10 @@ run() {
 
 	# We usually don't want to redownload boost.
 	# Use ./clear_local_all.sh manually instead if necessary.
-	if [[ ! -d "$linuxTmp/boost" ]]; then
-		bash "./regenerate_local_$platformLinux.sh"
+	if [[ ! -d "$currentTmp/boost" ]]; then
+		./regenerate_local_Multiarch.sh
 	else
-		bash "./regenerate-soft_local_$platformLinux.sh"
+		./regenerate-soft_local_Multiarch.sh
 	fi
 }
 

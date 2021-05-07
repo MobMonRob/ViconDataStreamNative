@@ -7,13 +7,13 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [[ ! -d "$linuxTmp/boost" ]]; then
+	if [[ ! -d "$currentTmp/boost" ]]; then
 		# Dependencies here
 
-		bash "./regenerate_local_$platformLinux.sh"
+		./regenerate_local_Multiarch.sh
 
-	elif [[ ! -d "$linuxTarget" ]]; then
-		bash "./regenerate-soft_local_$platformLinux.sh"
+	elif [[ ! -d "$currentTarget" ]]; then
+		./regenerate-soft_local_Multiarch.sh
 	fi
 }
 

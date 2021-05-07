@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	bash "./boost-setup_local_$platformLinux.sh"
+	bash "./boost-setup_local_$currentPlatform.sh"
 
-	bash "./boost-generate-usable-dir_local_$platformLinux.sh"
+	./boost-generate-usable-dir_local_Multiarch.sh
 }
 
 run_bash run $@

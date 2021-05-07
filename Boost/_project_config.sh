@@ -32,3 +32,16 @@ readonly boostVersion="boost-1.58.0"
 #$currentLocalPlatform will be used if $currentPlatform is unset.
 readonly currentLocalPlatform="$platformWindows"
 
+
+#Dependent Constants
+###########################
+if [[ -z ${currentPlatform+x} ]]; then
+	#"CurrentPlatform is unset"
+	currentPlatform="$currentLocalPlatform"
+	export currentPlatform
+	echo "currentPlatform was set to $currentPlatform and exported."
+
+	readonly currentTarget="$localTarget/$currentPlatform"
+	readonly currentTmp="$localTmp/$currentPlatform"
+fi
+
