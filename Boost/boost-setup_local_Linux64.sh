@@ -17,6 +17,8 @@ run() {
 
 	copy_boost_dir
 
+	bootstrap_boost
+
 	build_boost
 
 	link_so
@@ -33,15 +35,26 @@ copy_boost_dir() {
 }
 
 
+bootstrap_boost() {
+	cd "$boostDir"
+
+	git clean -d -f -X
+	rm -rdf "$buildDir"
+
+	./bootstrap.sh
+
+	cd "$scriptDir"
+}
+
+
 build_boost() {
 	cd "$boostDir"
 
 	git clean -d -f -X
-	rm -rdf "$stageDir"
 	rm -rdf "$buildDir"
 	./bootstrap.sh
 
-	local -r compilerArgs="-fPIC -flto"
+	local -r compilerArgs="-fPIC -flto -std=c++14 -w -O3"
 
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
 	./b2 -q -sNO_BZIP2=1 --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
@@ -66,7 +79,9 @@ link_so() {
 	rm -rdf "$fullLocalTarget"
 	mkdir -p "$fullLocalTarget"
 
-	g++ -shared -flto -Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -pthread -licuuc -licudata -licui18n -lz -Wl,--end-group \
+	g++ -shared \
+	-O3 -flto \
+	-Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -pthread -licuuc -licudata -licui18n -lz -Wl,--end-group \
 	-o "$fullLocalTarget/libboost.so" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 }
