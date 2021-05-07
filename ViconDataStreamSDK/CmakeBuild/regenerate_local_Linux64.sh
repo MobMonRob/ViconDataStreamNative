@@ -20,7 +20,7 @@ build() {
 	mkdir -p "$tmpDir"
 	cd "$tmpDir"
 
-	cmake ../../../CmakeBuild/
+	cmake ../../../CmakeBuild/ -DCMAKE_TOOLCHAIN_FILE=../../../CmakeBuild/mingw.cmake
 	make --jobs="$((2*$(nproc)))"
 
 	cd "$scriptDir"

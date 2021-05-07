@@ -11,7 +11,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
 SET (LIB_TYPE SHARED) #SHARED / STATIC
 
-if(${LIB_TYPE} STREQUAL SHARED)
+if((${CMAKE_SYSTEM_NAME} STREQUAL "Linux") AND (${LIB_TYPE} STREQUAL SHARED))
 	set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 	set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 	find_package(Threads REQUIRED)
@@ -19,8 +19,15 @@ endif()
 
 SET (VICON_ROOT "${CMAKE_SOURCE_DIR}/../current_Vicon_source/Vicon/CrossMarket")
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
-SET (BOOST "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64")
 SET (VICON_STRING_TEST "${CMAKE_SOURCE_DIR}/..")
+
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	SET (BOOST "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64")
+elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+	SET (BOOST "${CMAKE_SOURCE_DIR}/../../Boost/target/Windows64")
+else()
+	message(FATAL_ERROR "Target platform ${CMAKE_SYSTEM_NAME} not supported!")
+endif()
 
 # Declare a cpp library
 add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
@@ -52,8 +59,12 @@ target_sources(ViconDataStreamSDK_CPP
 
 if(${LIB_TYPE} STREQUAL SHARED)
 	target_link_libraries(ViconDataStreamSDK_CPP
-		PRIVATE Threads::Threads
-		PRIVATE "${BOOST}/libboost.so"
+		if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+			PRIVATE Threads::Threads
+			PRIVATE "${BOOST}/libboost.so"
+		elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+			PRIVATE "${BOOST}/libboost.dll"
+		endif()
 		-Wl,--as-needed
 		-Wl,--no-undefined
 		-Wl,--no-allow-shlib-undefined
@@ -61,7 +72,7 @@ if(${LIB_TYPE} STREQUAL SHARED)
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.5.0)
-    message(FATAL_ERROR "Not tested with gcc version lower than gcc-7.5.0. Change CMakeLists.txt if you can assure a lower version works!")
+    message(FATAL_ERROR "Not tested with gcc version lower than gcc-5.5.0. Change CMakeLists.txt if you can assure a lower version works!")
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -86,9 +97,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 		-mavx2
 		-funroll-loops
 		-Ofast
+		## Windows
+		if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+			-static-libgcc
+			-static-libstdc++
+		endif()
 	)
 
-	if(UNIX AND (${LIB_TYPE} STREQUAL SHARED))
+	if((${CMAKE_SYSTEM_NAME} STREQUAL "Linux") AND (${LIB_TYPE} STREQUAL SHARED))
 		#possible error source: this sets .so RUNPATH, not RPATH.
 		#RUNPATH is possibly used after LD_LIBRARY_PATH system variable.
 		set_target_properties(ViconDataStreamSDK_CPP PROPERTIES
@@ -96,5 +112,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 			INSTALL_RPATH "$ORIGIN/."
 		)
 	endif()
+else()
+	message(FATAL_ERROR "Only GNUCXX compiler supported.")
 endif()
 
