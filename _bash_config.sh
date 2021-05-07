@@ -20,6 +20,14 @@ run_bash() {
 loadProjectConfig() {
 	local -r configDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 	source "$configDir/_project_config.sh"
+
+	if [[ -z ${currentPlatform+x} ]]; then
+		#"CurrentPlatform is unset"
+		currentPlatform="$currentLocalPlatform"
+		export currentPlatform
+		echo "currentPlatform was set to $currentPlatform and exported."
+	fi
+
 }
 
 
