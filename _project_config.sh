@@ -38,10 +38,9 @@ if [[ -z ${currentPlatform+x} ]]; then
 	currentPlatform="$currentLocalPlatform"
 	export currentPlatform
 	echo "currentPlatform was set to $currentPlatform and exported."
-
-	readonly currentTarget="$localTarget/$currentPlatform"
-	readonly currentTmp="$localTmp/$currentPlatform"
 fi
+readonly currentTarget="$localTarget/$currentPlatform"
+readonly currentTmp="$localTmp/$currentPlatform"
 
 
 #Platform Variables
