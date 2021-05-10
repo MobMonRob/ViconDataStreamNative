@@ -9,6 +9,8 @@ project(vicon-datastream-sdk
 #Vicon SDK file gcc.mk defines this as minimum required version
 set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
+#message(FATAL_ERROR "CMAKE_SYSTEM_NAME = ${CMAKE_SYSTEM_NAME}")
+
 SET (LIB_TYPE SHARED) #SHARED / STATIC
 
 if((${CMAKE_SYSTEM_NAME} STREQUAL "Linux") AND (${LIB_TYPE} STREQUAL SHARED))
@@ -58,17 +60,24 @@ target_sources(ViconDataStreamSDK_CPP
 )
 
 if(${LIB_TYPE} STREQUAL SHARED)
-	target_link_libraries(ViconDataStreamSDK_CPP
-		if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE Threads::Threads
 			PRIVATE "${BOOST}/libboost.so"
-		elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+			-Wl,--as-needed
+			-Wl,--no-undefined
+			-Wl,--no-allow-shlib-undefined
+		)
+	elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE "${BOOST}/libboost.dll"
-		endif()
-		-Wl,--as-needed
-		-Wl,--no-undefined
-		-Wl,--no-allow-shlib-undefined
-	)
+			-Wl,--as-needed
+			-Wl,--no-undefined
+			-Wl,--no-allow-shlib-undefined
+		)
+	else()
+		message(FATAL_ERROR "Target platform ${CMAKE_SYSTEM_NAME} not supported!")
+	endif()
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.5.0)
@@ -84,6 +93,15 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	#check_ipo_supported() # fatal error if IPO is not supported
 	#set_property(TARGET ViconDataStreamSDK_CPP PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
+	if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+		set(IF_WINDOWS_COMPILE_OPTIONS
+			-static-libgcc
+			-static-libstdc++
+		)
+	else()
+		set(IF_WINDOWS_COMPILE_OPTIONS "")
+	endif()
+
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
 		## Own Options
 		-fPIC
@@ -98,10 +116,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 		-funroll-loops
 		-Ofast
 		## Windows
-		if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-			-static-libgcc
-			-static-libstdc++
-		endif()
+		${IF_WINDOWS_COMPILE_OPTIONS}
 	)
 
 	if((${CMAKE_SYSTEM_NAME} STREQUAL "Linux") AND (${LIB_TYPE} STREQUAL SHARED))

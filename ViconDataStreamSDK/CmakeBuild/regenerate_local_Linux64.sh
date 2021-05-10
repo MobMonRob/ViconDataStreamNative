@@ -21,6 +21,7 @@ build() {
 	cd "$tmpDir"
 
 	cmake ../../../CmakeBuild/ -DCMAKE_TOOLCHAIN_FILE=../../../CmakeBuild/mingw.cmake
+	#make --jobs=1
 	make --jobs="$((2*$(nproc)))"
 
 	cd "$scriptDir"
