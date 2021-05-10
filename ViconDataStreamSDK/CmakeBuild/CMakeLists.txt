@@ -117,6 +117,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 		-Ofast
 		## Windows
 		${IF_WINDOWS_COMPILE_OPTIONS}
+		## Supress warnings
+		-w
 	)
 
 	if((${CMAKE_SYSTEM_NAME} STREQUAL "Linux") AND (${LIB_TYPE} STREQUAL SHARED))
