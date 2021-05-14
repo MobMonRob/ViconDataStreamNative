@@ -94,7 +94,7 @@ link_so() {
 
 	echo "linking... (needs some time)"
 
-	rm -rdf "$fullLocalTarget"
+	rm -rdf $fullLocalTarget/lib*
 	mkdir -p "$fullLocalTarget"
 
 	#-pthread -licuuc -licudata -licui18n -lz

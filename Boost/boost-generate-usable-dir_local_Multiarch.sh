@@ -11,6 +11,10 @@ run() {
 	local -r boostRepoRoot="$currentTmp/boost"
 	local -r targetIncludeDir="$currentTarget/include/boost"
 
+	if [[ -d "$targetIncludeDir" ]]; then
+		return
+	fi
+
 	## Naive copying is not sufficient - unclear why some files are missing in that case.
 	## Workaround:
 	rm -rdf "$targetIncludeDir"

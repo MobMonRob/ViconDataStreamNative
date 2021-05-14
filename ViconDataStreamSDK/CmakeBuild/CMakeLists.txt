@@ -71,9 +71,11 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE "${BOOST}/libboost.dll"
-			-Wl,--as-needed
-			-Wl,--no-undefined
-			-Wl,--no-allow-shlib-undefined
+			-Wl,-Bstatic -Wl,--start-group -Wl,--whole-archive
+			-static-libgcc -static-libstdc++ -lwinpthread -lws2_32 -lwlanapi
+			-Wl,--no-whole-archive -Wl,--end-group -Wl,-Bdynamic
+			-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
+			-Wl,--export-all-symbols
 		)
 	else()
 		message(FATAL_ERROR "Target platform ${CMAKE_SYSTEM_NAME} not supported!")

@@ -29,5 +29,5 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 # https://stackoverflow.com/questions/55197902/cmake-cross-compiling-linux-to-windows-with-mingw-does-not-find-some-system-hea/55204775#55204775
 set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES /usr/lib/gcc/${TOOLCHAIN_PREFIX}/7.3-posix)
 
-#include_directories(SYSTEM /usr/lib/gcc/${TOOLCHAIN_PREFIX}/7.3-win32/include/c++)
+include_directories(SYSTEM /usr/share/mingw-w64/include/)
 
