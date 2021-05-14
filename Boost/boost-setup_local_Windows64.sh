@@ -43,9 +43,7 @@ bootstrap_boost() {
 
 	./bootstrap.sh
 
-	echo "using gcc : : x86_64-w64-mingw32-g++-posix ;" >> ./user-config.jam
-	echo "PTW32_INCLUDE = \"/usr/x86_64-w64-mingw32/include/\" ;" >> ./user-config.jam
-	echo "PTW32_LIB = \"/usr/x86_64-w64-mingw32/lib/\" ;" >> ./user-config.jam
+	echo "using gcc : : x86_64-w64-mingw32-g++-posix ;" > ./user-config.jam
 
 	cd "$scriptDir"
 }
@@ -64,12 +62,14 @@ build_boost() {
 	#1. a newer version of boost
 	#2. proviede PATH to MASM in Wine
 
+	#Please pay attention that boost::thread uses win32 as underlying threadapi whereas std::thread uses winpthread as underlying threadapi. There could be problems if intermixed. But currently unavoidable.
+
 	#--jobs="$((3*$(nproc)))"
 	#Debugging: --jobs=1
 	#Debugging: -d+2
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
 	#--without-wave --without-log --without-test --without-python --without-context --without-coroutine
-	./b2 -q -sNO_BZIP2=1 --with-thread binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=pthread architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=static --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
+	./b2 -q -sNO_BZIP2=1 --with-thread binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=win32 architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=static --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
 
 	cd "$scriptDir"
 }
