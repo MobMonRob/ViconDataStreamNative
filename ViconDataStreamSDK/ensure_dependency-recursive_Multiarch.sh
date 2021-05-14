@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$localTarget" ]
+	if [ ! -d "$currentTarget" ]
 	then
 		$BoostDir/ensure_dependency-recursive_Multiarch.sh
 

@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$localTarget" ]
+	if [ ! -d "$currentTarget" ]
 	then
-		$ViconDir/ensure_dependency-recursive_Multiarch.sh
+		$viconDir/ensure_dependency-recursive_Multiarch.sh
 
 		./regenerate_local_Multiarch.sh
 	fi

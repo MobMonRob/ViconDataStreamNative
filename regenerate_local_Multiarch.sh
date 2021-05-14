@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	rm -dfr $currentTarget
 	mkdir -p $currentTarget
-	cp -L -l -r -T $ViconDir/$currentTarget $currentTarget
+	cp -L -l -r -T $viconDir/$currentTarget $currentTarget
 }
 
 run_bash run $@
