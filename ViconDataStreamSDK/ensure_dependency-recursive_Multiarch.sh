@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	if [ ! -d "$currentTarget" ]
 	then
-		$BoostDir/ensure_dependency-recursive_Multiarch.sh
+		$boostDir/ensure_dependency-recursive_Multiarch.sh
 
 		./regenerate_local_Multiarch.sh
 	fi
