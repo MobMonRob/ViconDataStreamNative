@@ -15,11 +15,11 @@ run() {
 	local -r buildDir="$fullLocalTmp/build"
 	local -r boostLibDir="$stageDir/lib"
 
-	#copy_boost_dir
+	copy_boost_dir
 
-	#bootstrap_boost
+	bootstrap_boost
 
-	#build_boost
+	build_boost
 
 	link_so
 }
@@ -43,7 +43,9 @@ bootstrap_boost() {
 
 	./bootstrap.sh
 
-	echo "using gcc : : x86_64-w64-mingw32-g++-posix ;" > ./user-config.jam
+	echo "using gcc : : x86_64-w64-mingw32-g++-posix ;" >> ./user-config.jam
+	echo "PTW32_INCLUDE = \"/usr/x86_64-w64-mingw32/include/\" ;" >> ./user-config.jam
+	echo "PTW32_LIB = \"/usr/x86_64-w64-mingw32/lib/\" ;" >> ./user-config.jam
 
 	cd "$scriptDir"
 }
@@ -66,7 +68,8 @@ build_boost() {
 	#Debugging: --jobs=1
 	#Debugging: -d+2
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
-	./b2 -q -sNO_BZIP2=1 --without-wave --without-log --without-test --without-python --without-context --without-coroutine binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=pthread architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=static --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
+	#--without-wave --without-log --without-test --without-python --without-context --without-coroutine
+	./b2 -q -sNO_BZIP2=1 --with-thread binary-format=pe --user-config=user-config.jam --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc-mingw threadapi=pthread architecture=x86 address-model=64 target-os=windows optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=static --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
 
 	cd "$scriptDir"
 }
@@ -97,8 +100,9 @@ link_so() {
 	#-pthread -licuuc -licudata -licui18n -lz
 	x86_64-w64-mingw32-g++-posix -shared \
 	-O3 -flto  \
-	-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic \
-	-Wl,--start-group -Wl,--whole-archive $boostLibs -Wl,--no-whole-archive -Wl,--end-group \
+	-Wl,-Bstatic -Wl,--start-group -Wl,--whole-archive \
+	$boostLibs -static-libgcc -static-libstdc++ -lwinpthread \
+	-Wl,--no-whole-archive -Wl,--end-group -Wl,-Bdynamic \
 	-o "$fullLocalTarget/libboost.dll" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined \
 	-Wl,--out-implib,"$fullLocalTarget/libboost.a" \
