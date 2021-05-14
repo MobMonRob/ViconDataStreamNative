@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	$ViconDir/regenerate_dependency-recursive_Linux64.sh
+	$ViconDir/regenerate_dependency-recursive_Multiarch.sh
 
-	./regenerate_local_Linux64.sh
+	./regenerate_local_Multiarch.sh
 }
 
 run_bash run $@

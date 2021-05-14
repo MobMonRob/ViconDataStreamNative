@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	rm -dfr $localTarget
-	mkdir -p $localTarget
-	cp -L -l -r -T $ViconDir/$localTarget $localTarget
+	$BoostDir/regenerate_dependency-recursive_Multiarch.sh
+
+	./regenerate_local_Multiarch.sh
 }
 
 run_bash run $@

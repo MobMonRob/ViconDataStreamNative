@@ -7,12 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$localTarget" ]
-	then
-		$BoostDir/ensure_dependency-recursive_Multiarch.sh
-
-		./regenerate_local_Linux64.sh
-	fi
+	rm -dfr $currentTarget
+	mkdir -p $currentTarget
+	cp -L -l -r -T $ViconDir/$currentTarget $currentTarget
 }
 
 run_bash run $@

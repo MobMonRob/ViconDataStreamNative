@@ -15,9 +15,9 @@ run() {
 	local -r buildDir="$fullLocalTmp/build"
 	local -r boostLibDir="$stageDir/lib"
 
-	copy_boost_dir
+	#copy_boost_dir
 
-	bootstrap_boost
+	#bootstrap_boost
 
 	build_boost
 
