@@ -71,11 +71,11 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE "${BOOST}/libboost.dll"
-			-Wl,-Bstatic -Wl,--start-group -Wl,--whole-archive
-			-static-libgcc -static-libstdc++ -lwinpthread -lws2_32 -lwlanapi
-			-Wl,--no-whole-archive -Wl,--end-group -Wl,-Bdynamic
+			-lgcc -lstdc++
+			-Wl,-Bstatic -Wl,--start-group
+			-lwinpthread -lws2_32 -lwlanapi
+			-Wl,--end-group -Wl,-Bdynamic
 			-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
-			-Wl,--export-all-symbols
 		)
 	else()
 		message(FATAL_ERROR "Target platform ${CMAKE_SYSTEM_NAME} not supported!")
@@ -95,14 +95,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	#check_ipo_supported() # fatal error if IPO is not supported
 	#set_property(TARGET ViconDataStreamSDK_CPP PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-	if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-		set(IF_WINDOWS_COMPILE_OPTIONS
-			-static-libgcc
-			-static-libstdc++
-		)
-	else()
-		set(IF_WINDOWS_COMPILE_OPTIONS "")
-	endif()
+	#if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+	#	set(IF_WINDOWS_COMPILE_OPTIONS
+	#		-static-libgcc
+	#		-static-libstdc++
+	#	)
+	#else()
+	#	set(IF_WINDOWS_COMPILE_OPTIONS "")
+	#endif()
 
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
 		## Own Options

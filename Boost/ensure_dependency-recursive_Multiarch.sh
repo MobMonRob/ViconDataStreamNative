@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [[ ! -d "$currentTmp/boost" ]]; then
+	if [[ ! -d "$noarchTmp/boost" ]]; then
 		# Dependencies here
 
 		./regenerate_local_Multiarch.sh

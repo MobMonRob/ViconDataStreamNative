@@ -15,9 +15,9 @@ run() {
 	local -r buildDir="$fullLocalTmp/build"
 	local -r boostLibDir="$stageDir/lib"
 
-	#copy_boost_dir
+	copy_boost_dir
 
-	#bootstrap_boost
+	bootstrap_boost
 
 	build_boost
 
@@ -100,13 +100,13 @@ link_so() {
 	#-pthread -licuuc -licudata -licui18n -lz
 	x86_64-w64-mingw32-g++-posix -shared \
 	-O3 -flto  \
+	-lgcc -lstdc++ \
 	-Wl,-Bstatic -Wl,--start-group -Wl,--whole-archive \
-	$boostLibs -static-libgcc -static-libstdc++ -lwinpthread \
+	$boostLibs -lwinpthread \
 	-Wl,--no-whole-archive -Wl,--end-group -Wl,-Bdynamic \
 	-o "$fullLocalTarget/libboost.dll" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined \
 	-Wl,--out-implib,"$fullLocalTarget/libboost.a" \
-	-Wl,--export-all-symbols
 }
 
 run_bash run $@
