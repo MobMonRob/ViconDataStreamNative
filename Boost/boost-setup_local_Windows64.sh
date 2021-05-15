@@ -106,7 +106,7 @@ link_so() {
 	-Wl,--no-whole-archive -Wl,--end-group -Wl,-Bdynamic \
 	-o "$fullLocalTarget/libboost.dll" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined \
-	-Wl,--out-implib,"$fullLocalTarget/libboost.a" \
+	-Wl,--out-implib,"$fullLocalTarget/libboost.a"
 }
 
 run_bash run $@

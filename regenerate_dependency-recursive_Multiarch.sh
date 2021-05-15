@@ -6,6 +6,7 @@ cd "$scriptDir"
 
 source "./_bash_config.sh"
 
+
 run() {
 	$viconDir/regenerate_dependency-recursive_Multiarch.sh
 

@@ -1,13 +1,6 @@
 #!/bin/bash
 
 
-#needed by ./bash_config.sh
-###########################
-readonly projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-readonly projectFolderName="${projectDir##*/}"
-###########################
-
-
 #Platform Constants
 ###########################
 readonly platformWindows="Windows64"
@@ -36,6 +29,7 @@ readonly currentLocalPlatform="$platformWindows"
 if [[ -z ${currentPlatform+x} ]]; then
 	#"CurrentPlatform is unset"
 	currentPlatform="$currentLocalPlatform"
+	# export is needed to pass variable to invoked skripts
 	export currentPlatform
 	echo "currentPlatform was set to $currentPlatform and exported."
 fi
