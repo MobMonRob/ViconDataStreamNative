@@ -7,7 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	bash "./current_build/regenerate_local_$currentPlatform.sh"
+	bash "./CMakeBuild/regenerate_local_$currentPlatform.sh"
+
+	./deploy-mingW-deps_local_Windows64.sh
 }
 
 run_bash run $@

@@ -1,8 +1,7 @@
 #!/bin/bash
 
-readonly projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
-#Platform Constants
+# Platform Constants
 ###########################
 readonly platformWindows="Windows64"
 readonly platformLinux="Linux64"
@@ -17,7 +16,7 @@ readonly linuxTmp="$localTmp/$platformLinux"
 readonly windowsTmp="$localTmp/$platformWindows"
 
 
-#Platform Variables
+# Platform Variables
 ###########################
 #set $currentLocalPlatform but don't use it explicitly.
 #use $currentPlatform instead. But don't set it.
@@ -25,7 +24,7 @@ readonly windowsTmp="$localTmp/$platformWindows"
 readonly currentLocalPlatform="$platformWindows"
 
 
-#Dependent Platform Constants
+# Dependent Platform Constants
 ###########################
 if [[ -z ${currentPlatform+x} ]]; then
 	#"CurrentPlatform is unset"
@@ -38,8 +37,11 @@ readonly currentTarget="$localTarget/$currentPlatform"
 readonly currentTmp="$localTmp/$currentPlatform"
 
 
-#Platform Variables
+# Project Variables
 ###########################
-viconDir="$projectDir/ViconDataStreamSDK"
-boostDir="$projectDir/Boost"
+readonly projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+readonly viconDir="$projectDir/ViconDataStreamSDK"
+readonly boostDir="$projectDir/Boost"
+readonly mingwLibPath1="/usr/x86_64-w64-mingw32/lib"
+readonly mingwLibPath2="/usr/lib/gcc/x86_64-w64-mingw32/7.3-posix"
 
