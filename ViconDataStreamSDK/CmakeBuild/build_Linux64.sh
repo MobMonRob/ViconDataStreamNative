@@ -7,12 +7,15 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$currentTarget" ]
-	then
-		$viconDir/ensure_dependency-recursive_Multiarch.sh
+	local -r tmpDir="../$currentTmp"
+	mkdir -p "$tmpDir"
+	cd "$tmpDir"
 
-		./regenerate_local_Multiarch.sh
-	fi
+	cmake ../../../CmakeBuild/
+	#make --jobs=1
+	make --jobs="$((2*$(nproc)))"
+
+	cd "$scriptDir"
 }
 
 run_bash run $@

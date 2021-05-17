@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	$boostDir/regenerate_dependency-recursive_Multiarch.sh
+	$boostDir/_regenerate_dependency-recursive_Multiarch.sh
 
-	./regenerate_local_Multiarch.sh
+	./_regenerate_local_Multiarch.sh
 }
 
 run_bash run $@

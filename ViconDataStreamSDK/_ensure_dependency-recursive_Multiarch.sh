@@ -6,11 +6,13 @@ cd "$scriptDir"
 
 source "./_bash_config.sh"
 
-
 run() {
-	$viconDir/regenerate_dependency-recursive_Multiarch.sh
+	if [ ! -d "$currentTarget" ]
+	then
+		$boostDir/_ensure_dependency-recursive_Multiarch.sh
 
-	./regenerate_local_Multiarch.sh
+		./_regenerate_local_Multiarch.sh
+	fi
 }
 
 run_bash run $@

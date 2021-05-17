@@ -12,9 +12,9 @@ run() {
 	# We usually don't want to redownload boost.
 	# Use ./clear_local_all.sh manually instead if necessary.
 	if [[ ! -d "$noarchTmp/boost" ]]; then
-		./regenerate_local_Multiarch.sh
+		./_regenerate_local_Multiarch.sh
 	else
-		./regenerate-soft_local_Multiarch.sh
+		./_regenerate-soft_local_Multiarch.sh
 	fi
 }
 

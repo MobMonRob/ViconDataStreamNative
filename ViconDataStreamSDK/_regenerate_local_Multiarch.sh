@@ -7,11 +7,10 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$currentTarget" ]
-	then
-		$boostDir/ensure_dependency-recursive_Multiarch.sh
+	./CMakeBuild/_regenerate_local_Multiarch.sh
 
-		./regenerate_local_Multiarch.sh
+	if [[ "$currentPlatform" -eq "$platformWindows" ]]; then
+		./copy-mingW-deps_Windows64.sh
 	fi
 }
 

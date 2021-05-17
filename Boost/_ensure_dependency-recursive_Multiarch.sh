@@ -10,10 +10,10 @@ run() {
 	if [[ ! -d "$noarchTmp/boost" ]]; then
 		# Dependencies here
 
-		./regenerate_local_Multiarch.sh
+		./_regenerate_local_Multiarch.sh
 
 	elif [[ ! -d "$currentTarget" ]]; then
-		./regenerate-soft_local_Multiarch.sh
+		./_regenerate-soft_local_Multiarch.sh
 	fi
 }
 

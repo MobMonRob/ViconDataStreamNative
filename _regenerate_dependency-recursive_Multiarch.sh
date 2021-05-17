@@ -6,12 +6,11 @@ cd "$scriptDir"
 
 source "./_bash_config.sh"
 
-run() {
-	bash "./CMakeBuild/regenerate_local_$currentPlatform.sh"
 
-	if [[ "$currentPlatform" -eq "$platformWindows" ]]; then
-		./deploy-mingW-deps_local_Windows64.sh
-	fi
+run() {
+	$viconDir/_regenerate_dependency-recursive_Multiarch.sh
+
+	./_regenerate_local_Multiarch.sh
 }
 
 run_bash run $@

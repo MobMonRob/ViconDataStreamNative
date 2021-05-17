@@ -7,11 +7,11 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	./clear_local_all.sh
+	../_clear_local_all.sh
 
-	./boost-download_local_Noarch.sh
+	bash "./build_$currentPlatform.sh"
 
-	./regenerate-soft_local_Multiarch.sh
+	./copy_Multiarch.sh
 }
 
 run_bash run $@

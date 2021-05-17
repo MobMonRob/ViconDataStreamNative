@@ -7,28 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	../clear_local_all.sh
-
 	local -r tmpDir="../$currentTmp"
-
-	build
-	copy
-}
-
-
-build() {
-	mkdir -p "$tmpDir"
-	cd "$tmpDir"
-
-	cmake ../../../CmakeBuild/ -DCMAKE_TOOLCHAIN_FILE=../../../CmakeBuild/mingw.cmake
-	#make --jobs=1
-	make --jobs="$((2*$(nproc)))"
-
-	cd "$scriptDir"
-}
-
-
-copy() {
 	local -r boostTargetDir="$boostDir/$currentTarget"
 	local -r targetDir="../$currentTarget"
 

@@ -1,1 +1,0 @@
-../clear_local_all.sh
