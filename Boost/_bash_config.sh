@@ -2,14 +2,21 @@
 
 
 run_bash() {
-	setupVariables
-
 	# this implements export isolation.
 	# exports within the exportIsolation function won't be
 	# exported to this outer environment.
 	exportIsolation "$@" &
 	my_pid=$!
 	wait $my_pid
+}
+
+
+exportIsolation() {
+	setupVariables
+	setupErrorHandling
+
+	loadConfig
+	loggedRunner "$@"
 }
 
 
@@ -66,16 +73,8 @@ on_err() {
 }
 
 
-exportIsolation() {
-	setupErrorHandling
-
-	loadProjectConfig
-
-	loggedRunner "$@"
-}
-
-
-loadProjectConfig() {
+loadConfig() {
+	source "$unlinkedOwnPath/_platform_config.sh"
 	source "$unlinkedOwnPath/_project_config.sh"
 }
 
