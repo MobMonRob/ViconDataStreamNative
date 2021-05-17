@@ -9,7 +9,9 @@ source "./_bash_config.sh"
 run() {
 	bash "./CMakeBuild/regenerate_local_$currentPlatform.sh"
 
-	./deploy-mingW-deps_local_Windows64.sh
+	if [[ "$currentPlatform" -eq "$platformWindows" ]]; then
+		./deploy-mingW-deps_local_Windows64.sh
+	fi
 }
 
 run_bash run $@
