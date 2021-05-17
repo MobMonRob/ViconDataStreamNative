@@ -76,11 +76,21 @@ loadConfig() {
 
 
 loggedRunner() {
-	echo "started: $relativeScriptPath"
+	if [[ -z ${level+x} ]]; then
+		level="1"
+		export level
+	fi
+
+	echo "---started($level): $relativeScriptPath"
+
+	((level+=1))
+	export level
 
 	local -r the_run="$@"
 	$the_run
 
-	echo "finished: $relativeScriptPath"
+	((level-=1))
+
+	echo "--finished($level): $relativeScriptPath"
 }
 
