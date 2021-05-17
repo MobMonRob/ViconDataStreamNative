@@ -12,10 +12,10 @@ run() {
 	if [[ ! -d "$currentTarget/include/boost" ]]; then
 		./generate-full-include-dir_Multiarch.sh
 	else
-		echo "Skipped ./generate-full-include-dir_Multiarch.sh because $currentTarget/include/boost already exists."
+		echo "Info: skipped ./generate-full-include-dir_Multiarch.sh because $currentTarget/include/boost already exists."
 	fi
 
-	if [[ "$currentPlatform" -eq "$platformWindows" ]]; then
+	if [[ "$currentPlatform" == "$platformWindows" ]]; then
 		./copy-mingW-deps_Windows64.sh
 	fi
 }

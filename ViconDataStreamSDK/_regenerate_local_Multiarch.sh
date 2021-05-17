@@ -7,9 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	./CMakeBuild/_regenerate_local_Multiarch.sh
+	./CmakeBuild/_regenerate_local_Multiarch.sh
 
-	if [[ "$currentPlatform" -eq "$platformWindows" ]]; then
+	if [[ "$currentPlatform" == "$platformWindows" ]]; then
 		./copy-mingW-deps_Windows64.sh
 	fi
 }
