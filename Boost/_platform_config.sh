@@ -31,7 +31,7 @@ if [[ -z ${currentPlatform+x} ]]; then
 	currentPlatform="$currentLocalPlatform"
 	# export is needed to pass variable to invoked skripts
 	export currentPlatform
-	echo "currentPlatform was set to $currentPlatform and exported."
+	echo "Info: currentPlatform was set to $currentPlatform and exported."
 fi
 readonly currentTarget="$localTarget/$currentPlatform"
 readonly currentTmp="$localTmp/$currentPlatform"

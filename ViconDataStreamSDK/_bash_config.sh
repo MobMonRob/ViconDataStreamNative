@@ -21,37 +21,33 @@ exportIsolation() {
 
 
 setupVariables() {
-	readonly unlinkedOwnPath="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-	local -r projectPath="$unlinkedOwnPath"
-	# Needed by getRelativeScriptPath
-	local -r projectDirName="${projectPath##*/}"
+	local -r ownFullPath="$(realpath -s "${BASH_SOURCE[0]}")"
+	local -r unlinkedOwnFullPath="$(readlink -f "$ownFullPath")"
+	readonly unlinkedOwnDirPath="$(dirname "$unlinkedOwnFullPath")"
 
-	readonly relativeScriptPath=$(getRelativeScriptPath)
+	setRelativeScriptPath
 }
 
 
-getRelativeScriptPath() {
+setRelativeScriptPath() {
+	if [[ -z ${firstInvokedSkriptPath+x} ]]; then
+		#"CurrentPlatform is unset"
+		firstInvokedSkriptPath="$scriptDir"
+		# export is needed to pass variable to invoked skripts
+		export firstInvokedSkriptPath
+		echo "Info: firstInvokedSkriptPath was set to $firstInvokedSkriptPath and exported."
+	fi
+
 	local -r scriptName="$(basename "$scriptPath")"
 
-	local -r relativeScriptDirList=$(echo $scriptDir| tr '/' '\n')
-	local relativeScriptDir=""
-	local afterProjectFolder="false"
+	if [[ "$firstInvokedSkriptPath" == "$scriptDir" ]]; then
+		local -r relativeFullPath="./$scriptName"
+	else
+		local -r relativeDirPath="$(realpath --relative-to="$firstInvokedSkriptPath" "$scriptDir")"
+		local -r relativeFullPath="./$relativeDirPath/$scriptName"
+	fi
 
-	for folder in $relativeScriptDirList; do
-		if [[ $afterProjectFolder == false ]]; then
-			if [[ $folder == $projectDirName ]]; then
-				afterProjectFolder="true"
-				relativeScriptDir="."
-			fi
-			continue
-		else
-			relativeScriptDir="$relativeScriptDir/$folder"
-		fi
-	done
-
-	local relativeScriptPath="$relativeScriptDir/$scriptName"
-
-	echo "$relativeScriptPath"
+	readonly relativeScriptPath="$relativeFullPath"
 }
 
 
@@ -74,8 +70,8 @@ on_err() {
 
 
 loadConfig() {
-	source "$unlinkedOwnPath/_platform_config.sh"
-	source "$unlinkedOwnPath/_project_config.sh"
+	source "$unlinkedOwnDirPath/_platform_config.sh"
+	source "$unlinkedOwnDirPath/_project_config.sh"
 }
 
 
