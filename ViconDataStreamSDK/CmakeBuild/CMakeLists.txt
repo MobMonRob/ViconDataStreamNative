@@ -71,10 +71,7 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE "${BOOST}/libboost.dll"
-			-lgcc -lstdc++
-			-Wl,-Bstatic -Wl,--start-group
-			-lwinpthread -lws2_32 -lwlanapi
-			-Wl,--end-group -Wl,-Bdynamic
+			-lws2_32 -lwlanapi
 			-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 		)
 	else()
