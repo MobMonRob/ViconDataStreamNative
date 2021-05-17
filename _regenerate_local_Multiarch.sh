@@ -10,6 +10,8 @@ run() {
 	rm -dfr $currentTarget
 	mkdir -p $currentTarget
 	cp -L -l -r -T $viconDir/$currentTarget $currentTarget
+
+	rm -f $windowsTarget/*.dll.a
 }
 
 run_bash run $@
