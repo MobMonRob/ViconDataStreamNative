@@ -22,6 +22,7 @@ run_bash() {
 # Execute within run
 ##############################
 setSuccessToken() {
+	mkdir -p $currentTmp
 	local -r succesToken="$currentTmp/successToken"
 	echo "$(date --rfc-3339=seconds)" > $succesToken
 }
