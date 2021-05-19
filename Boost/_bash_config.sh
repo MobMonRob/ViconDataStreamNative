@@ -1,26 +1,32 @@
 #!/bin/bash
 
 
+# Needed Boilerplate to use this bash config in a script:
+# scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+# source "./_bash_config.sh"
+# run() {
+# # <Your code>
+# }
+# run_bash run $@
+
+
 # PUBLIC
+# Last command
 ##############################
 run_bash() {
-	# this implements export isolation.
-	# exports within the exportIsolation function won't be
-	# exported to this outer environment.
-	exportIsolation "$@" &
-	my_pid=$!
-	wait $my_pid
+	exportIsolation "$@"
 }
 
 
-# Only allowed within run_bash
+# PUBLIC
+# Execute within run
+##############################
 setSuccessToken() {
 	local -r succesToken="$currentTmp/successToken"
 	echo "$(date --rfc-3339=seconds)" > $succesToken
 }
 
 
-# Only allowed within run_bash
 # Usage: if [[ "$(isSuccessTokenSet)" == "false" ]]; then
 isSuccessTokenSet() {
 	local -r succesToken="$currentTmp/successToken"
@@ -33,17 +39,54 @@ isSuccessTokenSet() {
 
 
 # PRIVATE
+# Executed within run
 ##############################
 exportIsolation() {
-	setupVariables
-	setRelativeScriptPath
-	setupErrorHandling
+	# this implements export isolation.
+	# exports within the withinExportIsolation function won't be
+	# exported to this outer environment.
+	# exports will only passed to invoked scripts.
+	withinExportIsolation "$@" &
+	my_pid=$!
+	wait $my_pid
+}
 
+
+withinExportIsolation() {
 	loadConfig
 	loggedRunner "$@"
 }
 
 
+loadConfig() {
+	source "$unlinkedOwnDirPath/_platform_config.sh"
+	source "$unlinkedOwnDirPath/_project_config.sh"
+}
+
+
+loggedRunner() {
+	if [[ -z ${level+x} ]]; then
+		level="1"
+		export level
+	fi
+
+	echo "---started($level): $relativeScriptPath"
+
+	((level+=1))
+	export level
+
+	local -r the_run="$@"
+	$the_run
+
+	((level-=1))
+
+	echo "--finished($level): $relativeScriptPath"
+}
+
+
+# PRIVATE
+# Used while sourcing
+##############################
 setupVariables() {
 	local -r ownFullPath="$(realpath -s "${BASH_SOURCE[0]}")"
 	local -r unlinkedOwnFullPath="$(readlink -f "$ownFullPath")"
@@ -91,28 +134,14 @@ on_err() {
 }
 
 
-loadConfig() {
-	source "$unlinkedOwnDirPath/_platform_config.sh"
-	source "$unlinkedOwnDirPath/_project_config.sh"
+# PRIVATE
+# Executed while sourcing
+##############################
+whileSourcing() {
+	setupVariables
+	setRelativeScriptPath
+	setupErrorHandling
 }
 
-
-loggedRunner() {
-	if [[ -z ${level+x} ]]; then
-		level="1"
-		export level
-	fi
-
-	echo "---started($level): $relativeScriptPath"
-
-	((level+=1))
-	export level
-
-	local -r the_run="$@"
-	$the_run
-
-	((level-=1))
-
-	echo "--finished($level): $relativeScriptPath"
-}
+whileSourcing
 
