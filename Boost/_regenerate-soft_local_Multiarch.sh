@@ -18,6 +18,8 @@ run() {
 	if [[ "$currentPlatform" == "$platformWindows" ]]; then
 		./copy-mingW-deps_Windows64.sh
 	fi
+
+	setSuccessToken
 }
 
 run_bash run $@

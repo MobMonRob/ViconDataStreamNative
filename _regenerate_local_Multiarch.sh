@@ -12,6 +12,8 @@ run() {
 	cp -L -l -r -T $viconDir/$currentTarget $currentTarget
 
 	rm -f $windowsTarget/*.dll.a
+
+	setSuccessToken
 }
 
 run_bash run $@

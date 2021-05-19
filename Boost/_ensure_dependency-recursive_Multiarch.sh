@@ -12,7 +12,7 @@ run() {
 
 		./_regenerate_local_Multiarch.sh
 
-	elif [[ ! -d "$currentTarget" ]]; then
+	elif [[ "$(isSuccessTokenSet)" == "false" ]]; then
 		./_regenerate-soft_local_Multiarch.sh
 	fi
 }

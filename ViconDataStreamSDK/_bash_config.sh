@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+# PUBLIC
+##############################
 run_bash() {
 	# this implements export isolation.
 	# exports within the exportIsolation function won't be
@@ -11,8 +13,30 @@ run_bash() {
 }
 
 
+# Only allowed within run_bash
+setSuccessToken() {
+	local -r succesToken="$currentTmp/successToken"
+	echo "$(date --rfc-3339=seconds)" > $succesToken
+}
+
+
+# Only allowed within run_bash
+# Usage: if [[ "$(isSuccessTokenSet)" == "false" ]]; then
+isSuccessTokenSet() {
+	local -r succesToken="$currentTmp/successToken"
+	if [[ -e "$succesToken" ]]; then
+		echo "true"
+	else
+		echo "false"
+	fi
+}
+
+
+# PRIVATE
+##############################
 exportIsolation() {
 	setupVariables
+	setRelativeScriptPath
 	setupErrorHandling
 
 	loadConfig
@@ -24,8 +48,6 @@ setupVariables() {
 	local -r ownFullPath="$(realpath -s "${BASH_SOURCE[0]}")"
 	local -r unlinkedOwnFullPath="$(readlink -f "$ownFullPath")"
 	readonly unlinkedOwnDirPath="$(dirname "$unlinkedOwnFullPath")"
-
-	setRelativeScriptPath
 }
 
 
