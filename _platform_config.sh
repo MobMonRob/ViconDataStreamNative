@@ -5,34 +5,47 @@
 ###########################
 readonly platformWindows="Windows64"
 readonly platformLinux="Linux64"
+readonly platformNoarch="Noarch"
 
 readonly localTarget="./target"
 readonly linuxTarget="$localTarget/$platformLinux"
 readonly windowsTarget="$localTarget/$platformWindows"
+readonly noarchTarget="$localTarget/$platformNoarch"
 
 readonly localTmp="$localTarget/_tmp"
-readonly noarchTmp="$localTmp/Noarch"
 readonly linuxTmp="$localTmp/$platformLinux"
 readonly windowsTmp="$localTmp/$platformWindows"
+readonly noarchTmp="$localTmp/$platformNoarch"
 
+setCurrentPlatform() {
+	newPlatform="$1"
 
-# Variables
-###########################
-#set $currentLocalPlatform but don't use it explicitly.
-#use $currentPlatform instead. But don't set it.
-#$currentLocalPlatform will be used if $currentPlatform is unset.
-readonly currentLocalPlatform="$platformWindows"
+	if [[ \
+		("$newPlatform" != "$platformLinux") && \
+		("$newPlatform" != "$platformWindows") && \
+		("$newPlatform" != "$platformNoarch") \
+	]]; then
+		echo "Error: newPlatform=$newPlatform not supported."
+		exit 1
+	fi
 
-
-# Dependent Constants
-###########################
-if [[ -z ${currentPlatform+x} ]]; then
-	#"CurrentPlatform is unset"
-	currentPlatform="$currentLocalPlatform"
+	currentPlatform="$newPlatform"
 	# export is needed to pass variable to invoked skripts
 	export currentPlatform
-	echo "Info: currentPlatform was set to $currentPlatform and exported."
-fi
-readonly currentTarget="$localTarget/$currentPlatform"
-readonly currentTmp="$localTmp/$currentPlatform"
+	echo "Info: set and exported currentPlatform=$currentPlatform"
+
+	currentTarget="$localTarget/$currentPlatform"
+	currentTmp="$localTmp/$currentPlatform"
+}
+
+ensurePlatformInitialization() {
+	if [[ -z ${currentPlatform+x} ]]; then
+	#"CurrentPlatform is unset"
+		setCurrentPlatform "$standardPlatform"
+	fi
+}
+
+readonly standardPlatform="$platformLinux"
+
+ensurePlatformInitialization
 

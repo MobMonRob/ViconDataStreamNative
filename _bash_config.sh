@@ -39,6 +39,19 @@ isSuccessTokenSet() {
 }
 
 
+# To use this function in a project, remove "readonly" declarations of variables in _project_config.sh to avoid errors.
+# A project is a directory which contains _bash_config.sh, _platform_config.sh and _project_config.sh.
+# Invoked other projects won't be affected.
+changePlatformTo() {
+	newPlatform="$1"
+
+	if [[ "$currentPlatform" != "$newPlatform" ]]; then
+		setCurrentPlatform "$newPlatform"
+		source "$unlinkedOwnDirPath/_project_config.sh"
+	fi
+}
+
+
 # PRIVATE
 # Executed within run
 ##############################
@@ -101,7 +114,7 @@ setRelativeScriptPath() {
 		firstInvokedSkriptPath="$scriptDir"
 		# export is needed to pass variable to invoked skripts
 		export firstInvokedSkriptPath
-		echo "Info: firstInvokedSkriptPath was set to $firstInvokedSkriptPath and exported."
+		echo "Info: set and exported firstInvokedSkriptPath=$firstInvokedSkriptPath"
 	fi
 
 	local -r scriptName="$(basename "$scriptPath")"
@@ -130,8 +143,9 @@ on_err() {
 
 	if [[ "$errorCode" -ne "$magicNum" ]] ;then
 		echo -e "\nError occurred in: $relativeScriptPath" >&2
-		exit "$magicNum"
 	fi
+
+	exit "$magicNum"
 }
 
 
