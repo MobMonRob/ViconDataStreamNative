@@ -22,20 +22,28 @@ run_bash() {
 # Execute within run
 ##############################
 setSuccessToken() {
+	cd "$unlinkedOwnDirPath"
+
 	mkdir -p $currentTmp
 	local -r succesToken="$currentTmp/successToken"
 	echo "$(date --rfc-3339=seconds)" > $succesToken
+
+	cd "$scriptDir"
 }
 
 
 # Usage: if [[ "$(isSuccessTokenSet)" == "false" ]]; then
 isSuccessTokenSet() {
+	cd "$unlinkedOwnDirPath"
+
 	local -r succesToken="$currentTmp/successToken"
 	if [[ -e "$succesToken" ]]; then
 		echo "true"
 	else
 		echo "false"
 	fi
+
+	cd "$scriptDir"
 }
 
 
@@ -49,6 +57,19 @@ changePlatformTo() {
 		setCurrentPlatform "$newPlatform"
 		source "$unlinkedOwnDirPath/_project_config.sh"
 	fi
+}
+
+
+clearCurrentPlatform() {
+	cd "$unlinkedOwnDirPath"
+
+	rm -rdf "$currentTarget"
+	mkdir -p "$currentTarget"
+
+	rm -rdf "$currentTmp"
+	mkdir -p "$currentTmp"
+
+	cd "$scriptDir"
 }
 
 

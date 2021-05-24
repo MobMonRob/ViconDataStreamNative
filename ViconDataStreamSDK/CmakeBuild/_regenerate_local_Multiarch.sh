@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	../_clear_local_all.sh
+	clearCurrentPlatform
 
 	bash "./build_$currentPlatform.sh"
 

@@ -7,8 +7,8 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	rm -dfr $currentTarget
-	mkdir -p $currentTarget
+	clearCurrentPlatform
+
 	cp -L -l -r -T $viconDir/$currentTarget $currentTarget
 
 	rm -f $windowsTarget/*.dll.a
