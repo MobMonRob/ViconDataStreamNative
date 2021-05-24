@@ -34,8 +34,9 @@ setCurrentPlatform() {
 	export currentPlatform
 	echo "Info: set and exported currentPlatform=$currentPlatform"
 
-	currentTarget="$localTarget/$currentPlatform"
-	currentTmp="$localTmp/$currentPlatform"
+	# Export needed by public functions of _bash_config.sh
+	export currentTarget="$localTarget/$currentPlatform"
+	export currentTmp="$localTmp/$currentPlatform"
 }
 
 ensurePlatformInitialization() {
