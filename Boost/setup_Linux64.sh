@@ -84,7 +84,7 @@ link_so() {
 	#Erratic  error - windows + posix only
 	rm -f "$boostLibDir"/*wave*.a
 
-	local -r boostLibs=$(find "$boostLibDir" -maxdepth 1 -mindepth 1 -type f)
+	local -r boostLibs=$(find "$boostLibDir" -maxdepth 1 -mindepth 1 -type f -printf '-l:%f ')
 
 	echo "linking... (needs some time)"
 
@@ -94,7 +94,7 @@ link_so() {
 	g++ -shared \
 	-O3 -flto  \
 	-Wl,-Bstatic -Wl,--start-group -Wl,--whole-archive \
-	$boostLibs \
+	-L"$boostLibDir" $boostLibs \
 	-Wl,--no-whole-archive \
 	-pthread -licuuc -licudata -licui18n -lz \
 	-Wl,--end-group -Wl,-Bdynamic \
