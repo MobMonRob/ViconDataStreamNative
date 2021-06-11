@@ -15,5 +15,5 @@ git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 git stash &> /dev/null
 git stash clear &> /dev/null
 
-echo "ViconDataStreamNative cleared hard"
+echo "ViconDataStreamSDK cleared hard"
 

@@ -34,8 +34,8 @@ includes_rekursive()
 		local oldIncludeDir="$subFolderPath/include/boost/"
 
 		if [[ -e  "$oldIncludeDir" ]]; then
-			echo $oldIncludeDir
-			cp -r -L -l $oldIncludeDir/* "$targetIncludeDir"
+			echo "$oldIncludeDir"
+			cp -r -L -l "$oldIncludeDir"/* "$targetIncludeDir"
 			#echo "fi" &>/dev/null
 		fi
 

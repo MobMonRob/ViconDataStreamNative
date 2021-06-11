@@ -8,7 +8,7 @@ source "./_bash_config.sh"
 
 run() {
 	if [[ "$(isSuccessTokenSet)" == "false" ]]; then
-		$boostDir/_ensure_dependency-recursive_Multiarch.sh
+		bash "$boostDir/_ensure_dependency-recursive_Multiarch.sh"
 
 		./_regenerate_local_Multiarch.sh
 	fi
