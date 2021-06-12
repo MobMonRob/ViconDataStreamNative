@@ -24,9 +24,9 @@ run_bash() {
 setSuccessToken() {
 	cd "$unlinkedOwnDirPath"
 
-	mkdir -p $currentTmp
+	mkdir -p "$currentTmp"
 	local -r succesToken="$currentTmp/successToken"
-	echo "$(date --rfc-3339=seconds)" > $succesToken
+	echo "$(date --rfc-3339=seconds)" > "$succesToken"
 
 	cd "$scriptDir"
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 
 read -rsp "sure?" -n 1 pause1
 echo ""
@@ -15,5 +15,5 @@ git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 git stash &> /dev/null
 git stash clear &> /dev/null
 
-echo "ViconDataStreamNative cleared hard"
+echo "cleared hard"
 
