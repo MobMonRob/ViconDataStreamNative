@@ -13,6 +13,7 @@ run() {
 
 	if [[ "$currentPlatform" == "$platformWindows" ]]; then
 		./copy-mingW-deps_Windows64.sh
+		rm -f "$windowsTarget"/*.dll.a
 	fi
 
 	setSuccessToken
