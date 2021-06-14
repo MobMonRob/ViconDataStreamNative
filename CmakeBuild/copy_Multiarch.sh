@@ -15,6 +15,7 @@ run() {
 
 	cp -L -l "$boostTargetDir"/lib* "$targetDir"
 	cp -L -l "$tmpDir"/lib* "$targetDir"
+	rm -f "$windowsTarget"/*.dll.a
 
 	cp -L -l "../current_Vicon_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP"/*DataStream*Client*.h "$targetDir"
 
