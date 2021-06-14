@@ -1,12 +1,7 @@
-#Ignore temporary files
-**/.*.kate-swp
-**/.directory
-
-#Ignore generated folders
-**/.vs
-**/x64
-**/x32
-**/Debug
-**/Release
 **/target
+**/Release
+**/DataStream/*_C
+**/DataStream/*Test*
+**/Vicon/../../thirdparty
+**/Vicon/../bin
 

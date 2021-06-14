@@ -9,9 +9,11 @@ source "./_bash_config.sh"
 run() {
 	clearCurrentPlatform
 
-	cp -L -l -r -T "$viconDir/$currentTarget" "$currentTarget"
+	./CmakeBuild/_regenerate_local_Multiarch.sh
 
-	rm -f "$windowsTarget"/*.dll.a
+	if [[ "$currentPlatform" == "$platformWindows" ]]; then
+		./copy-mingW-deps_Windows64.sh
+	fi
 
 	setSuccessToken
 }
