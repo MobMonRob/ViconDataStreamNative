@@ -79,8 +79,8 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	endif()
 endif()
 
-if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.5.0)
-    message(FATAL_ERROR "Not tested with gcc version lower than gcc-5.5.0. Change CMakeLists.txt if you can assure a lower version works!")
+if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.3.0)
+    message(FATAL_ERROR "Not tested with gcc (or Mingw-w64) version lower than gcc-5.3.0. Change CMakeLists.txt if you can assure a lower version works!")
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
