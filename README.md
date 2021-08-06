@@ -1,11 +1,12 @@
 ## Description
 Builds the [Vicon DataStream SDK](https://www.vicon.com/software/datastream-sdk/?section=downloads).
+
 The source code in the folder referenced by the link `current_Vicon_source` is copied from the [Vicon DataStream SDK 1.10.0](https://www.vicon.com/software/datastream-sdk/?section=downloads) which is licensed under an MIT license regarding to their website. [Wayback Machine Link](https://web.archive.org/web/20210125075752/https://www.vicon.com/software/datastream-sdk/?section=downloads)
 
 Supported target systems: Linux x86-64, Windows x86-64 (via preconfigured cross-compilation) \
 Supported build systems: Linux
 
-Part of the [JViconDataStream2](https://github.com/MobMonRob/JViconDataStream2) project]. There you can find more information how to use ViconDataStreamNative.
+Part of the [JViconDataStream2](https://github.com/MobMonRob/JViconDataStream2) project. There you can find more information how to use ViconDataStreamNative.
 
 
 ## Tested prerequisites
