@@ -4,7 +4,7 @@ Builds the Vicon DataStream SDK.
 Supported target systems: Linux x86-64, Windows x86-64 (via preconfigured cross-compilation) \
 Supported build systems: Linux
 
-Part of the [JViconDataStream2](https://github.com/MobMonRob/JViconDataStream2) project]. There you can find more information how to use ViconDataStreamNative.
+Part of the [JViconDataStream2](https://github.com/MobMonRob/JViconDataStream2) project. There you can find more information how to use ViconDataStreamNative.
 
 
 ## Tested prerequisites
