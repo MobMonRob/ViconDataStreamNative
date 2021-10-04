@@ -72,7 +72,9 @@ if(${LIB_TYPE} STREQUAL SHARED)
 		target_link_libraries(ViconDataStreamSDK_CPP
 			PRIVATE "${BOOST}/libboost.dll"
 			-lws2_32 -lwlanapi
-			-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
+			-Wl,--as-needed
+			-Wl,--no-undefined
+			-Wl,--no-allow-shlib-undefined
 		)
 	else()
 		message(FATAL_ERROR "Target platform ${CMAKE_SYSTEM_NAME} not supported!")
@@ -92,30 +94,33 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	#check_ipo_supported() # fatal error if IPO is not supported
 	#set_property(TARGET ViconDataStreamSDK_CPP PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-	#if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-	#	set(IF_WINDOWS_COMPILE_OPTIONS
-	#		-static-libgcc
-	#		-static-libstdc++
-	#	)
-	#else()
-	#	set(IF_WINDOWS_COMPILE_OPTIONS "")
-	#endif()
+	#-static-libgcc
+	#-static-libstdc++
+	#-flto
+	if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+		set(IF_PLATFORM_COMPILE_OPTIONS
+		""
+		)
+	else()
+		set(IF_PLATFORM_COMPILE_OPTIONS
+		""
+		)
+	endif()
 
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
 		## Own Options
 		-fPIC
 		-std=c++14
-		-flto
 		## Taken from Vicon SDK file gcc.mk
 		-m64 #x86_64
 		-mfpmath=sse
+		-O3
 		#-msse2
 		## Unsafe optimization. Comment out if problems occur.
 		-mavx2
 		-funroll-loops
-		-Ofast
-		## Windows
-		${IF_WINDOWS_COMPILE_OPTIONS}
+		## Platform specific
+		${IF_PLATFORM_COMPILE_OPTIONS}
 		## Supress warnings
 		-w
 	)
