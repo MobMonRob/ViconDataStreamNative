@@ -27,17 +27,43 @@ std::string ViconDataStreamSDK::CPP::ViconStringToJavaStringTest::getStdStringHa
 
 
 ///////////////////////////////////////////
-std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInput(ViconDataStreamSDK::CPP::String javaString)
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInput(String javaToViconString)
 {
-	std::string stdString = javaString;
+	std::string stdString = javaToViconString;
 	return stdString;
 }
 
-std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringReferenceInput(const ViconDataStreamSDK::CPP::String& javaString)
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInputConst(const String javaToViconString)
 {
-	std::string stdString = javaString;
+	std::string stdString = javaToViconString;
 	return stdString;
 }
+
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInputReference(String& javaToViconString)
+{
+	std::string stdString = javaToViconString;
+	return stdString;
+}
+
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInputReferenceConst(const String& javaToViconString)
+{
+	std::string stdString = javaToViconString;
+	return stdString;
+}
+
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInputPointer(String* javaToViconString)
+{
+	std::string stdString = *javaToViconString;
+	return stdString;
+}
+
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInputPointerConst(const String* javaToViconString)
+{
+	std::string stdString = *javaToViconString;
+	return stdString;
+}
+
+
 ///////////////////////////////////////////
 
 

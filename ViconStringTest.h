@@ -27,9 +27,17 @@ public:
 class JavaStringToViconStringTest
 {
 public:
-	std::string testJavaStringInput(String javaString);
+	std::string testJavaStringInput(String javaToViconString);
+	
+	std::string testJavaStringInputConst(const String javaToViconString);
 
-	std::string testJavaStringReferenceInput(const String& javaString);
+	std::string testJavaStringInputReference(String& javaToViconString);
+	
+	std::string testJavaStringInputReferenceConst(const String& javaToViconString);
+    
+    std::string testJavaStringInputPointer(String* javaToViconString);
+    
+    std::string testJavaStringInputPointerConst(const String* javaToViconString);
 };
 ///////////////////////////////////////////
 
