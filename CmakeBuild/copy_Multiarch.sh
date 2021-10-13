@@ -17,7 +17,6 @@ run() {
 	cp -L -l "$tmpDir"/lib* "$targetDir"
 
 	cp -L -l "../current_Vicon_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP"/*DataStream*Client*.h "$targetDir"
-	cp -L -l "../current_Vicon_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP"/StringFactory.h "$targetDir"
 
 	cp -L -l "../ViconStringTest.h" "$targetDir"
 }
