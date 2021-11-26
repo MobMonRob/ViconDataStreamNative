@@ -108,17 +108,14 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	endif()
 
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
-		## Own Options
+		##
 		-fPIC
 		-std=c++14
-		## Taken from Vicon SDK file gcc.mk
-		-m64 #x86_64
-		-mfpmath=sse
+        ## Optimization
 		-O3
-		#-msse2
-		## Unsafe optimization. Comment out if problems occur.
-		-mavx2
-		-funroll-loops
+		## CPU Platform
+		-m64
+		-march=native
 		## Platform specific
 		${IF_PLATFORM_COMPILE_OPTIONS}
 		## Supress warnings

@@ -32,3 +32,10 @@ Change the `standardPlatform` variable in the `_platform_config.sh` file.
 **In a script** \
 Use `changePlatformTo "$platformLinux"` or `changePlatformTo "$platformWindows"` and then run `_ensure_dependency-recursive_Multiarch.sh`.
 
+
+## Maven Central build
+The natives for Maven have to work on various CPU's.
+Please make sure, to do the following steps before a Maven Central build:
+* Open `./CmakeBuild/CMakeLists.txt`.
+* Comment out the line `-march=native` with a leading `#`.
+
